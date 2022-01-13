@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS reviews_photos;
 DROP TABLE IF EXISTS characteristic_reviews;
 DROP TABLE IF EXISTS characteristics;
 
+
 CREATE TABLE reviews_data (
   id INT PRIMARY KEY NOT NULL,
   product_id INT,

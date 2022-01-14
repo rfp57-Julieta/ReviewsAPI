@@ -16,15 +16,13 @@ app.get('/', (req, res) => {
 
 app.get('/reviews/:id', (req, res) => {
   // returns list of reviews for particular product
-  db.getReviews(req.params.id, (err, result) => {
-    if (err) {
-      console.log('Failed to get data:', err);
-      res.status(500).send();
-    } else {
-      console.log('Got all the reviews');
-      res.status(200).send(result);
-    }
-  });
+  db.getReviews(req.params.id)
+  .then(results => {
+    res.send(results);
+  })
+  .catch(err => {
+    res.send('There was an error getting the reviews');
+  })
 })
 
 app.get('/reviews/meta', (req, res) => {

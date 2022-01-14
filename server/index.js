@@ -25,9 +25,15 @@ app.get('/reviews/:id', (req, res) => {
   })
 })
 
-app.get('/reviews/meta', (req, res) => {
+app.get('/reviews/meta/:id', (req, res) => {
   // returns review metadata for given product
-  res.send('This is the reviews meta route');
+  db.getReviewsMetadata(req.params.id)
+  .then(results => {
+    res.send(results);
+  })
+  .catch(err => {
+    res.send('There was an error getting the reviews metadata');
+  })
 })
 
 app.post('/reviews', (req, res) => {

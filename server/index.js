@@ -1,8 +1,12 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const db = require('../db/index.js');
 
 const app = express();
 const port = 3000;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.send('Hello from the Express server!');
@@ -10,9 +14,17 @@ app.get('/', (req, res) => {
 
 // API ROUTES
 
-app.get('/reviews', (req, res) => {
+app.get('/reviews/:id', (req, res) => {
   // returns list of reviews for particular product
-  res.send('This is the reviews list route');
+  db.getReviews(req.params.id, (err, result) => {
+    if (err) {
+      console.log('Failed to get data:', err);
+      res.status(500).send();
+    } else {
+      console.log('Got all the reviews');
+      res.status(200).send(result);
+    }
+  });
 })
 
 app.get('/reviews/meta', (req, res) => {

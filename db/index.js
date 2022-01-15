@@ -21,14 +21,14 @@ async function getReviews(id) {
   package['results'] = review_data.rows;
 
   for (let row of review_data.rows) {
-    var photos = `SELECT id, url FROM reviews_photos WHERE review_id=${row.id}`
+    var photos = `SELECT id, url FROM reviews_photos WHERE review_id=${row.id}`;
     // console.log(row.id);
     let photos_data = await pool.query(photos);
     row['photos'] = photos_data.rows;
 
     // package['results'].push()
   }
-
+  // await pool.end();
   return package;
 }
 
@@ -41,11 +41,35 @@ async function getReviewsMetadata(id) {
     'characteristics': {}
   }
 
-  let ratings = `SELECT COUNT(*) FROM reviews_data WHERE product_id=${id} GROUP BY rating`;
+  let ratings = `SELECT rating,COUNT(rating) FROM reviews_data WHERE product_id=${id} GROUP BY rating ORDER BY rating`;
   let ratingsCount = await pool.query(ratings);
 
-  console.log(ratingsCount);
+  for (let key of ratingsCount.rows) {
+    metadata.ratings[String(key.rating)] = key.count;
+  }
 
+  let recommended = `SELECT recommend,COUNT(recommend) FROM reviews_data WHERE product_id=${id} GROUP BY recommend ORDER BY recommend`;
+  let recommendedCount = await pool.query(recommended);
+  for (let key of recommendedCount.rows) {
+    metadata.recommended[key.recommend] = key.count;
+  }
+  // console.log(recommendedCount.rows)
+
+  let characteristics = `SELECT id,product_id,name FROM characteristics WHERE product_id=${id}`
+  let characteristics_data = await pool.query(characteristics);
+  for (let key of characteristics_data.rows) {
+    let valueQuery = `(SELECT AVG(value) FROM characteristic_reviews WHERE characteristic_id=${key.id})`
+    let characteristics_values = await pool.query(valueQuery);
+    // console.log(characteristics_values.rows);
+    characteristics_values.rows[0].avg ? metadata.characteristics[key.name] = {
+      'id': key.id,
+      'value': characteristics_values.rows[0].avg
+    } : null;
+  }
+  // console.log(characteristics_data.rows);
+  // console.log(metadata);
+
+  return metadata;
 }
 
 

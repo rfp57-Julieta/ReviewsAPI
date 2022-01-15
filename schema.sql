@@ -46,5 +46,7 @@
 
 -- \COPY characteristic_reviews from '/Users/edwardpak/Desktop/hackreactor/System-Design-Capstone/ReviewsAPI/characteristic_reviews.csv' DELIMITER ',' CSV HEADER;
 
-CREATE INDEX idx_product_id ON reviews_data(product_id);
-CREATE INDEX idx_review_id ON reviews_photos(review_id);
+-- CREATE INDEX idx_product_id ON reviews_data(product_id);
+-- CREATE INDEX idx_review_id ON reviews_photos(review_id);
+-- CREATE INDEX index_characteristics_product_id ON characteristics(product_id);
+-- CREATE INDEX idx_characteristics_reviews_characteristic_id ON characteristic_reviews(characteristic_id);

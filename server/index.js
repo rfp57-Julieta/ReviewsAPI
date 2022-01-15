@@ -61,6 +61,13 @@ app.post('/reviews', (req, res) => {
 
 app.put('/reviews/:review_id/helpful', (req, res) => {
   // update a review to show it was found helpful
+  db.markHelpful(req.body.review_id)
+  .then(results => {
+    res.status(204).send();
+  })
+  .catch(err => {
+    res.send('There was an error marking a review as helpful');
+  })
 })
 
 app.put('/reviews/:review_id/report', (req, res) => {

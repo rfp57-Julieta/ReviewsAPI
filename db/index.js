@@ -96,6 +96,12 @@ async function addReview(product_id, rating, summary, body, recommend, name, ema
   }
 }
 
+async function markHelpful(review_id) {
+  let markHelpfulQuery = `UPDATE reviews_data SET helpfulness=helpfulness+1 WHERE id=${review_id}`;
+  let markHelpful = await pool.query(markHelpfulQuery);
+  return markHelpful;
+}
+
 
 // pool.connect()
 // .then((res) => {
@@ -108,7 +114,8 @@ async function addReview(product_id, rating, summary, body, recommend, name, ema
 module.exports = {
   getReviews,
   getReviewsMetadata,
-  addReview
+  addReview,
+  markHelpful
 }
 
 // ORIGINAL getReviews FUNCTION CODE - async issue with queries

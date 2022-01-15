@@ -26,9 +26,7 @@ async function getReviews(id) {
     let photos_data = await pool.query(photos);
     row['photos'] = photos_data.rows;
 
-    // package['results'].push()
   }
-  // await pool.end();
   return package;
 }
 
@@ -53,7 +51,6 @@ async function getReviewsMetadata(id) {
   for (let key of recommendedCount.rows) {
     metadata.recommended[key.recommend] = key.count;
   }
-  // console.log(recommendedCount.rows)
 
   let characteristics = `SELECT id,product_id,name FROM characteristics WHERE product_id=${id}`
   let characteristics_data = await pool.query(characteristics);
@@ -72,7 +69,10 @@ async function getReviewsMetadata(id) {
   return metadata;
 }
 
-
+// Add a review for the given product
+async function addReview(product_id, rating, summary, body, recommend, name, email, photos, characteristics) {
+  let addReviewQuery = `INSERT INTO reviews_data(product_id,rating,summary,body,recommend,reviewer_name,reviewer_email) VALUES(${product_id},${rating},${summary},${body},${recommend},${name},${email})`;
+}
 
 
 // pool.connect()
@@ -85,7 +85,8 @@ async function getReviewsMetadata(id) {
 
 module.exports = {
   getReviews,
-  getReviewsMetadata
+  getReviewsMetadata,
+  addReview
 }
 
 // ORIGINAL getReviews FUNCTION CODE - async issue with queries

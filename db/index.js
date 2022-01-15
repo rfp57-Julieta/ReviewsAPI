@@ -16,7 +16,7 @@ async function getReviews(id) {
     'count': 5
   }
 
-  var reviews = `SELECT id,rating,summary,recommend,response,body,date,reviewer_name,helpfulness FROM reviews_data WHERE product_id=${id}`;
+  var reviews = `SELECT id,rating,summary,recommend,response,body, TO_TIMESTAMP(date / 1000),reviewer_name,helpfulness FROM reviews_data WHERE product_id=${id}`;
   let review_data = await pool.query(reviews);
   package['results'] = review_data.rows;
 

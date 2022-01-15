@@ -38,6 +38,23 @@ app.get('/reviews/meta/:id', (req, res) => {
 
 app.post('/reviews', (req, res) => {
   // add review for given product
+  let product_id = req.body.product_id;
+  let rating = req.body.rating;
+  let summary = req.body.summary;
+  let body = req.body.body;
+  let recommend = req.body.recommend;
+  let name = req.body.name;
+  let email = req.body.email;
+  let photos = req.body.photos;
+  let characteristics = req.body.characteristics;
+
+  db.addReview(product_id, rating, summary, body, recommend, name, email, photos, characteristics)
+  .then(results => {
+    res.send(results);
+  })
+  .catch(err => {
+    res.send('There was an error adding a review');
+  })
 })
 
 app.put('/reviews/:review_id/helpful', (req, res) => {

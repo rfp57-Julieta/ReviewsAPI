@@ -5,7 +5,7 @@
 
 
 -- CREATE TABLE reviews_data (
---   id INT PRIMARY KEY NOT NULL,
+--   id SERIAL PRIMARY KEY NOT NULL,
 --   product_id INT,
 --   rating INT,
 --   date BIGINT,
@@ -20,19 +20,19 @@
 -- );
 
 -- CREATE TABLE reviews_photos (
---   id INT PRIMARY KEY NOT NULL,
+--   id SERIAL PRIMARY KEY NOT NULL,
 --   review_id INT references reviews_data(id),
 --   url VARCHAR(255)
 -- );
 
 -- CREATE TABLE characteristics (
---   id INT PRIMARY KEY NOT NULL,
+--   id SERIAL PRIMARY KEY NOT NULL,
 --   product_id INT,
 --   name VARCHAR(255)
 -- );
 
 -- CREATE TABLE characteristic_reviews (
---   id INT PRIMARY KEY NOT NULL,
+--   id SERIAL PRIMARY KEY NOT NULL,
 --   characteristic_id INT references characteristics(id),
 --   review_id INT references reviews_data(id),
 --   value INT

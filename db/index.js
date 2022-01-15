@@ -71,7 +71,9 @@ async function getReviewsMetadata(id) {
 
 // Add a review for the given product
 async function addReview(product_id, rating, summary, body, recommend, name, email, photos, characteristics) {
-  let addReviewQuery = `INSERT INTO reviews_data(product_id,rating,summary,body,recommend,reviewer_name,reviewer_email) VALUES(${product_id},${rating},${summary},${body},${recommend},${name},${email})`;
+  let addReviewDataQuery = `INSERT INTO reviews_data(product_id,rating,summary,body,recommend,reviewer_name,reviewer_email) VALUES(${product_id},${rating},${summary},${body},${recommend},${name},${email})`;
+
+  let addReviewData = await pool.query(addReviewQuery);
 }
 
 

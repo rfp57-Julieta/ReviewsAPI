@@ -71,7 +71,11 @@ async function getReviewsMetadata(id) {
 
 // Add a review for the given product
 async function addReview(product_id, rating, summary, body, recommend, name, email, photos, characteristics) {
-  let addReviewDataQuery = `INSERT INTO reviews_data(product_id,rating,summary,body,recommend,reviewer_name,reviewer_email) VALUES(${product_id},${rating},${summary},${body},${recommend},${name},${email})`;
+  const now = new Date();
+  const convertedTime = Date.parse(now);
+  // console.log(now);
+  // console.log(convertedTime);
+  let addReviewDataQuery = `INSERT INTO reviews_data(product_id,rating,date,summary,body,recommend,reviewer_name,reviewer_email) VALUES(${product_id},${rating},${convertedTime},${summary},${body},${recommend},${name},${email})`;
 
   let addReviewData = await pool.query(addReviewQuery);
 }

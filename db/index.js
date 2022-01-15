@@ -74,10 +74,26 @@ async function addReview(product_id, rating, summary, body, recommend, name, ema
   const now = new Date();
   const convertedTime = Date.parse(now);
   // console.log(now);
-  // console.log(convertedTime);
-  let addReviewDataQuery = `INSERT INTO reviews_data(product_id,rating,date,summary,body,recommend,reviewer_name,reviewer_email) VALUES(${product_id},${rating},${convertedTime},${summary},${body},${recommend},${name},${email})`;
+  // console.log(typeof convertedTime);
+  let addReviewDataQuery = `INSERT INTO reviews_data(id,product_id,rating,date,summary,body,recommend,reviewer_name,reviewer_email) VALUES((SELECT id+1 FROM reviews_data ORDER BY id DESC LIMIT 1),${product_id},${rating},${convertedTime},'${summary}','${body}',${recommend},'${name}','${email}') RETURNING id,product_id`;
 
-  let addReviewData = await pool.query(addReviewQuery);
+  try {
+    let result = await pool.query(addReviewDataQuery);
+    // console.log(result);
+    for (let photo of photos) {
+      let addReviewPhotosQuery = `INSERT INTO reviews_photos(id,review_id,url) VALUES((SELECT id+1 FROM reviews_photos ORDER BY id DESC LIMIT 1),${result.rows[0].id},'${photos[photo]}')`;
+      let addReviewPhoto = await pool.query(addReviewPhotosQuery);
+    }
+
+    for (let characteristic in characteristics) {
+      // console.log(characteristic);
+      let addCharacteristicQuery = `INSERT INTO characteristic_reviews(id,characteristic_id,review_id,value) VALUES((SELECT id+1 FROM characteristic_reviews ORDER BY id DESC LIMIT 1),${characteristic},${result.rows[0].id},${characteristics[characteristic]})`;
+      let addCharacteristicReview = await pool.query(addCharacteristicQuery);
+    }
+    return result;
+  } catch (err) {
+    console.log('this is the db catch error:',err.stack);
+  }
 }
 
 

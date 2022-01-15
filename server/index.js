@@ -48,9 +48,11 @@ app.post('/reviews', (req, res) => {
   let photos = req.body.photos;
   let characteristics = req.body.characteristics;
 
+
+  // console.log(req.body);
   db.addReview(product_id, rating, summary, body, recommend, name, email, photos, characteristics)
   .then(results => {
-    res.send(results);
+    res.status(201).send();
   })
   .catch(err => {
     res.send('There was an error adding a review');

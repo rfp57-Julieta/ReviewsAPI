@@ -1,3 +1,5 @@
+// ADD require('newrelic') HERE
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../db/index.js');

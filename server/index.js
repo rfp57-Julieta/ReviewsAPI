@@ -1,4 +1,4 @@
-// ADD require('newrelic') HERE
+require('newrelic');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -17,9 +17,9 @@ app.get('/', (req, res) => {
 
 /////// API ROUTES ////////
 
-app.get('/reviews/:id', (req, res) => {
+app.get('/reviews/', (req, res) => {
   // returns list of reviews for particular product
-  db.getReviews(req.params.id)
+  db.getReviews(req.query.product_id)
   .then(results => {
     res.send(results);
   })
@@ -28,9 +28,9 @@ app.get('/reviews/:id', (req, res) => {
   })
 })
 
-app.get('/reviews/meta/:id', (req, res) => {
+app.get('/reviews/meta/', (req, res) => {
   // returns review metadata for given product
-  db.getReviewsMetadata(req.params.id)
+  db.getReviewsMetadata(req.query.product_id)
   .then(results => {
     res.send(results);
   })

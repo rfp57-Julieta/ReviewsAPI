@@ -6,3 +6,6 @@ reviews_photos.csv
 reviews.csv
 config.js
 newrelic_agent.log
+reviewsdb.sql
+.DS_Store
+.gitignore

@@ -3,7 +3,7 @@ import { sleep, check } from 'k6';
 import { Counter } from 'k6/metrics';
 
 export let options = {
-  vus: 100,   // simulate how many virtual users
+  vus: 1000,   // simulate how many virtual users
   duration: '15s', // how long you want it to run
   // duration: '30s',
 };

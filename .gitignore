@@ -8,4 +8,5 @@ config.js
 newrelic_agent.log
 reviewsdb.sql
 .DS_Store
+SDCDatabase.pem
 .gitignore
